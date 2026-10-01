@@ -1,4 +1,4 @@
-const API = 'http://127.0.0.1:8001'  // Porta 8001 que está rodando sua API
+const API = 'http://127.0.0.1:8000'  // Porta 8001 que está rodando sua API
 const formCliente = document.getElementById('form-cliente')
 const botaoSubmit = document.getElementById('btn-submit-cliente')
 

@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 from pydantic import BaseModel
 from typing import Optional
 from database import conectar
+import os
 
 router = APIRouter()
 
@@ -21,41 +22,48 @@ class Agendamento(BaseModel):
 
 
 # ============================================================
-# PARTE 4 — POST
-# Cadastrar agendamento
+# POST — Cadastrar agendamento (devolve o ID criado)
 # ============================================================
 
 @router.post("/agendamentos")
 def criar_agendamento(agendamento: Agendamento):
     conn = conectar()
     cursor = conn.cursor()
-
     cursor.execute(
-        """INSERT INTO agendamento
-           (idcliente, idtatuador, dataagendamento,
-            horaagendamento, descricaotatuagem, valortatuagem)
-           VALUES (%s, %s, %s, %s, %s, %s)""",
-        (
-            agendamento.idcliente,
-            agendamento.idtatuador,
-            agendamento.dataagendamento,
-            agendamento.horaagendamento,
-            agendamento.descricaotatuagem,
-            agendamento.valortatuagem
-        )
+        """INSERT INTO agendamento (idcliente, idtatuador, dataagendamento, horaagendamento, descricaotatuagem, valortatuagem)
+            VALUES (%s, %s, %s, %s, %s, %s)""",
+        (agendamento.idcliente, agendamento.idtatuador, agendamento.dataagendamento,
+         agendamento.horaagendamento, agendamento.descricaotatuagem, agendamento.valortatuagem)
     )
-
+    novo_id = cursor.lastrowid   # o ID que o MySQL gerou sozinho pro novo agendamento
     conn.commit()
     conn.close()
-
-    return {
-        "mensagem": "Agendamento cadastrado com sucesso"
-    }
+    return {"mensagem": "Agendamento cadastrado com sucesso", "idagendamento": novo_id}
 
 
 # ============================================================
-# PARTE 5 — GET
-# Listar todos os agendamentos
+# POST — Upload de imagem do desenho aprovado
+# ============================================================
+
+@router.post("/agendamentos/{id}/desenho")
+async def upload_desenho(id: int, arquivo: UploadFile = File(...)):
+    nome_arquivo = f"{id}_{arquivo.filename}"   # o id na frente evita nomes repetidos
+    caminho = os.path.join("uploads", nome_arquivo)
+
+    conteudo = await arquivo.read()       # lê o conteúdo do arquivo enviado
+    with open(caminho, "wb") as f:        # "wb" = write binary
+        f.write(conteudo)
+
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE agendamento SET desenhoaprovado=%s WHERE idagendamento=%s", (nome_arquivo, id))
+    conn.commit()
+    conn.close()
+    return {"mensagem": "Desenho enviado com sucesso", "arquivo": nome_arquivo}
+
+
+# ============================================================
+# GET — Listar todos os agendamentos
 # ============================================================
 
 @router.get("/agendamentos")
@@ -76,29 +84,19 @@ def listar_agendamentos():
     """)
 
     agendamentos = cursor.fetchall()
-
     conn.close()
 
-    # Converte a hora para HH:MM:SS
-
     for a in agendamentos:
-        total_segundos = int(
-            a["horaagendamento"].total_seconds()
-        )
-
+        total_segundos = int(a["horaagendamento"].total_seconds())
         horas, resto = divmod(total_segundos, 3600)
         minutos, segundos = divmod(resto, 60)
-
-        a["horaagendamento"] = (
-            f"{horas:02d}:{minutos:02d}:{segundos:02d}"
-        )
+        a["horaagendamento"] = f"{horas:02d}:{minutos:02d}:{segundos:02d}"
 
     return agendamentos
 
 
 # ============================================================
-# PARTE 6 — GET POR ID
-# Buscar um agendamento específico
+# GET — Buscar um agendamento específico
 # ============================================================
 
 @router.get("/agendamentos/{id}")
@@ -106,46 +104,27 @@ def buscar_agendamento(id: int):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
 
-    cursor.execute(
-        "SELECT * FROM agendamento WHERE idagendamento = %s",
-        (id,)
-    )
-
+    cursor.execute("SELECT * FROM agendamento WHERE idagendamento = %s", (id,))
     agendamento = cursor.fetchone()
-
     conn.close()
 
     if not agendamento:
-        return {
-            "erro": "Agendamento não encontrado"
-        }
+        return {"erro": "Agendamento não encontrado"}
 
-    # Converte a hora para HH:MM:SS
-
-    total_segundos = int(
-        agendamento["horaagendamento"].total_seconds()
-    )
-
+    total_segundos = int(agendamento["horaagendamento"].total_seconds())
     horas, resto = divmod(total_segundos, 3600)
     minutos, segundos = divmod(resto, 60)
-
-    agendamento["horaagendamento"] = (
-        f"{horas:02d}:{minutos:02d}:{segundos:02d}"
-    )
+    agendamento["horaagendamento"] = f"{horas:02d}:{minutos:02d}:{segundos:02d}"
 
     return agendamento
 
 
 # ============================================================
-# PARTE 7 — PUT
-# Atualizar um agendamento
+# PUT — Atualizar um agendamento
 # ============================================================
 
 @router.put("/agendamentos/{id}")
-def atualizar_agendamento(
-    id: int,
-    agendamento: Agendamento
-):
+def atualizar_agendamento(id: int, agendamento: Agendamento):
     conn = conectar()
     cursor = conn.cursor()
 
@@ -174,14 +153,11 @@ def atualizar_agendamento(
     conn.commit()
     conn.close()
 
-    return {
-        "mensagem": "Agendamento atualizado com sucesso"
-    }
+    return {"mensagem": "Agendamento atualizado com sucesso"}
 
 
 # ============================================================
-# PARTE 8 — DELETE
-# Deletar um agendamento
+# DELETE — Deletar um agendamento
 # ============================================================
 
 @router.delete("/agendamentos/{id}")
@@ -189,14 +165,9 @@ def deletar_agendamento(id: int):
     conn = conectar()
     cursor = conn.cursor()
 
-    cursor.execute(
-        "DELETE FROM agendamento WHERE idagendamento = %s",
-        (id,)
-    )
+    cursor.execute("DELETE FROM agendamento WHERE idagendamento = %s", (id,))
 
     conn.commit()
     conn.close()
 
-    return {
-        "mensagem": "Agendamento deletado com sucesso"
-    }
+    return {"mensagem": "Agendamento deletado com sucesso"}

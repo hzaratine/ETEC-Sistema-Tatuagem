@@ -42,8 +42,11 @@
     <div class="col-md-2">
       <input type="number" id="valortatuagem" class="form-control" placeholder="Valor (R$)" step="0.01" min="0">
     </div>
-    <div class="col-md-12">
+    <div class="col-md-8">
       <textarea id="descricaotatuagem" class="form-control" placeholder="Descrição da tatuagem"></textarea>
+    </div>
+    <div class="col-md-4">
+      <input type="file" id="desenho" class="form-control" accept="image/*">
     </div>
 
     <!-- Esse bloco começa escondido — só aparece quando estamos editando um agendamento existente -->
@@ -72,6 +75,7 @@
         <th>Hora</th>
         <th>Valor</th>
         <th>Status</th>
+        <th>Desenho</th>
         <th>Ações</th>
       </tr>
     </thead>

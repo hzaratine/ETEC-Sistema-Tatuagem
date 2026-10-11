@@ -28,4 +28,4 @@ app.include_router(usuarios.router, prefix="/usuarios", tags=["Usuários"])
 
 @app.get("/")
 def inicio():
-    return {"mensagem": "API do estúdio de tatuagem funcionando!"}
+    return {"mensagem": "API do estúdio de tatuagem funcionando"}

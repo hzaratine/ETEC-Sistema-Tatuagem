@@ -1,4 +1,4 @@
-from fastapi import APIRouter      # organiza rotas em grupos
+from fastapi import APIRouter       # organiza rotas em grupos
 from pydantic import BaseModel     # valida os dados que chegam na API
 from typing import Optional        # permite campos opcionais
 from database import conectar      # nossa função de conexão
@@ -8,8 +8,8 @@ router = APIRouter()               # cria o grupo de rotas
 
 # Modelo de dados — define os campos que o cliente deve ter
 class Cliente(BaseModel):
-    nome: str                           # obrigatório
-    cpf: str                            # obrigatório
+    nome: str                         # obrigatório
+    cpf: str                          # obrigatório
     telefone: Optional[str] = None      # opcional
     datacadastro: Optional[str] = None  # opcional
     cidade: Optional[str] = None        # opcional
@@ -17,7 +17,7 @@ class Cliente(BaseModel):
 
 
 # GET /clientes — lista todos os clientes (Parte 5)
-@router.get("/clientes")
+@router.get("")
 def listar_clientes():
     conn = conectar()                        # abre conexão
     cursor = conn.cursor(dictionary=True)    # retorna dicionários em vez de tuplas
@@ -28,7 +28,7 @@ def listar_clientes():
 
 
 # GET /clientes/{id} — busca um cliente pelo ID (Parte 6)
-@router.get("/clientes/{id}")
+@router.get("/{id}")
 def buscar_cliente(id: int):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
@@ -41,7 +41,7 @@ def buscar_cliente(id: int):
 
 
 # POST /clientes — cadastra um novo cliente (Parte 7)
-@router.post("/clientes")
+@router.post("")
 def criar_cliente(cliente: Cliente):   # recebe os dados no corpo da requisição
     conn = conectar()
     cursor = conn.cursor()
@@ -57,7 +57,7 @@ def criar_cliente(cliente: Cliente):   # recebe os dados no corpo da requisiçã
 
 
 # PUT /clientes/{id} — atualiza um cliente existente (Parte 8)
-@router.put("/clientes/{id}")
+@router.put("/{id}")
 def atualizar_cliente(id: int, cliente: Cliente):
     conn = conectar()
     cursor = conn.cursor()
@@ -74,7 +74,7 @@ def atualizar_cliente(id: int, cliente: Cliente):
 
 
 # DELETE /clientes/{id} — deleta um cliente (Parte 9)
-@router.delete("/clientes/{id}")
+@router.delete("/{id}")
 def deletar_cliente(id: int):
     conn = conectar()
     cursor = conn.cursor()

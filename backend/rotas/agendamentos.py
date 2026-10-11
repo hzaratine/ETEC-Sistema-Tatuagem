@@ -25,13 +25,13 @@ class Agendamento(BaseModel):
 # POST — Cadastrar agendamento (devolve o ID criado)
 # ============================================================
 
-@router.post("/agendamentos")
+@router.post("")
 def criar_agendamento(agendamento: Agendamento):
     conn = conectar()
     cursor = conn.cursor()
     cursor.execute(
         """INSERT INTO agendamento (idcliente, idtatuador, dataagendamento, horaagendamento, descricaotatuagem, valortatuagem)
-            VALUES (%s, %s, %s, %s, %s, %s)""",
+             VALUES (%s, %s, %s, %s, %s, %s)""",
         (agendamento.idcliente, agendamento.idtatuador, agendamento.dataagendamento,
          agendamento.horaagendamento, agendamento.descricaotatuagem, agendamento.valortatuagem)
     )
@@ -45,7 +45,7 @@ def criar_agendamento(agendamento: Agendamento):
 # POST — Upload de imagem do desenho aprovado
 # ============================================================
 
-@router.post("/agendamentos/{id}/desenho")
+@router.post("/{id}/desenho")
 async def upload_desenho(id: int, arquivo: UploadFile = File(...)):
     nome_arquivo = f"{id}_{arquivo.filename}"   # o id na frente evita nomes repetidos
     caminho = os.path.join("uploads", nome_arquivo)
@@ -66,7 +66,7 @@ async def upload_desenho(id: int, arquivo: UploadFile = File(...)):
 # GET — Listar todos os agendamentos
 # ============================================================
 
-@router.get("/agendamentos")
+@router.get("")
 def listar_agendamentos():
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
@@ -99,7 +99,7 @@ def listar_agendamentos():
 # GET — Buscar um agendamento específico
 # ============================================================
 
-@router.get("/agendamentos/{id}")
+@router.get("/{id}")
 def buscar_agendamento(id: int):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
@@ -123,7 +123,7 @@ def buscar_agendamento(id: int):
 # PUT — Atualizar um agendamento
 # ============================================================
 
-@router.put("/agendamentos/{id}")
+@router.put("/{id}")
 def atualizar_agendamento(id: int, agendamento: Agendamento):
     conn = conectar()
     cursor = conn.cursor()
@@ -137,7 +137,7 @@ def atualizar_agendamento(id: int, agendamento: Agendamento):
                descricaotatuagem=%s,
                valortatuagem=%s,
                status=%s
-           WHERE idagendamento=%s""",
+            WHERE idagendamento=%s""",
         (
             agendamento.idcliente,
             agendamento.idtatuador,
@@ -160,7 +160,7 @@ def atualizar_agendamento(id: int, agendamento: Agendamento):
 # DELETE — Deletar um agendamento
 # ============================================================
 
-@router.delete("/agendamentos/{id}")
+@router.delete("/{id}")
 def deletar_agendamento(id: int):
     conn = conectar()
     cursor = conn.cursor()

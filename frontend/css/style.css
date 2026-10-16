@@ -1,0 +1,335 @@
+:root {
+  /* Paleta de cores */
+  --primary: #7041a0;
+  --primary-hover: #5c3285;
+  --primary-light: #f5f0fa;
+  --background: #f8f9fa;
+  --surface: #ffffff;
+  --text: #1a1824;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --dark: #26222e;
+  --radius: 8px;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+}
+
+/* ========================================= RESET E ESTILOS GERAIS ========================================= */
+
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+body { 
+  background: var(--background); 
+  color: var(--text); 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+  font-size: 14px; 
+  line-height: 1.6; 
+  -webkit-font-smoothing: antialiased; 
+}
+
+/* ========================================= LAYOUT ========================================= */
+
+.container { 
+  width: min(1280px, 94%); 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+main, .main-content { 
+  padding: 40px 0; 
+}
+
+/* ========================================= NAVBAR ========================================= */
+
+nav.navbar { 
+  width: 100%; 
+  min-height: 72px; 
+  padding: 12px 0; 
+  background: var(--dark) !important; 
+  border-bottom: 3px solid var(--primary); 
+  position: relative; 
+  z-index: 100; 
+  box-shadow: var(--shadow-sm); 
+}
+
+nav.navbar > .container { 
+  width: min(1200px, 94%); 
+  min-height: 46px; 
+  margin-left: auto; 
+  margin-right: auto; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 20px; 
+}
+
+nav.navbar .navbar-brand { 
+  display: inline-flex; 
+  align-items: center; 
+  flex-shrink: 0; 
+  margin: 0; 
+  padding: 0; 
+  color: #ffffff !important; 
+  font-size: 19px; 
+  font-weight: 700; 
+  letter-spacing: -0.3px; 
+  text-decoration: none; 
+  white-space: nowrap; 
+}
+
+nav.navbar .navbar-brand:hover { 
+  color: #e5d5f4 !important; 
+}
+
+nav.navbar > .container > div { 
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-end; 
+  flex-wrap: wrap; 
+  gap: 5px; 
+}
+
+nav.navbar > .container > div > a { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin: 0 !important; 
+  padding: 9px 10px; 
+  border-radius: 5px; 
+  background: transparent; 
+  color: #e4dfea !important; 
+  font-size: 14px; 
+  font-weight: 500; 
+  line-height: 1.5; 
+  text-decoration: none !important; 
+  white-space: nowrap; 
+  transition: background 0.2s ease, color 0.2s ease; 
+}
+
+nav.navbar > .container > div > a:hover { 
+  background: #3b3346; 
+  color: #ffffff !important; 
+  text-decoration: none !important; 
+}
+
+nav.navbar > .container > div > button { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  min-height: 38px; 
+  margin: 0 0 0 5px; 
+  padding: 8px 16px; 
+  border: 1px solid #a89bb7; 
+  border-radius: 5px; 
+  background: transparent; 
+  color: #ffffff; 
+  font-family: inherit; 
+  font-size: 14px; 
+  font-weight: 600; 
+  line-height: 1.5; 
+  white-space: nowrap; 
+  cursor: pointer; 
+  transition: background 0.2s ease, color 0.2s ease; 
+}
+
+nav.navbar > .container > div > button:hover { 
+  background: #ffffff; 
+  border-color: #ffffff; 
+  color: var(--dark); 
+}
+
+/* ========================================= TIPOGRAFIA ========================================= */
+
+h1 { 
+  margin-bottom: 24px; 
+  color: var(--text); 
+  font-size: 28px; 
+  font-weight: 700; 
+  letter-spacing: -0.75px; 
+}
+
+/* ========================================= FORMULÁRIOS GERAIS ========================================= */
+
+form { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+  align-items: flex-end; 
+  gap: 16px; 
+  margin-bottom: 32px; 
+  padding: 24px; 
+  background: var(--surface); 
+  border: 1px solid var(--border); 
+  border-radius: var(--radius); 
+  box-shadow: var(--shadow-sm); 
+}
+
+form .form-group, form div:not(.btn-container) { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 6px; 
+}
+
+form input, form select, form textarea { 
+  width: 100%; 
+  min-width: 0; 
+  min-height: 48px; /* Altura ideal e confortável para inputs */
+  padding: 12px 16px; 
+  border: 1px solid var(--border); 
+  border-radius: var(--radius); 
+  background: var(--surface); 
+  color: var(--text); 
+  font-family: inherit; 
+  font-size: 14px; 
+  transition: border-color 0.15s ease, box-shadow 0.15s ease; 
+}
+
+form textarea { 
+  height: auto; 
+  resize: vertical; 
+}
+
+form input:focus, form select:focus, form textarea:focus { 
+  outline: none; 
+  border-color: var(--primary); 
+  box-shadow: 0 0 0 3px rgb(112 65 160 / 15%); 
+}
+
+form button, form input[type="submit"] { 
+  grid-column: 1 / -1; 
+  justify-self: start; 
+  margin-top: 8px; 
+}
+
+/* ========================================= BOTÕES GERAIS ========================================= */
+
+.btn, button, input[type="submit"] { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  min-height: 40px; 
+  padding: 0 20px; 
+  border: 1px solid transparent; 
+  border-radius: var(--radius); 
+  font-family: inherit; 
+  font-size: 14px; 
+  font-weight: 600; 
+  text-decoration: none; 
+  cursor: pointer; 
+  transition: background 0.15s ease, color 0.15s ease; 
+  white-space: nowrap; 
+}
+
+.btn-primary, form button, input[type="submit"] { 
+  background: var(--primary); 
+  color: #ffffff; 
+}
+
+.btn-primary:hover, form button:hover, input[type="submit"]:hover { 
+  background: var(--primary-hover); 
+}
+
+.btn-danger { background: var(--danger); color: #ffffff; }
+.btn-danger:hover { background: var(--danger-hover); }
+.btn-edit, .btn-secondary { background: var(--primary-light); color: var(--primary); }
+.btn-edit:hover, .btn-secondary:hover { background: var(--primary); color: #ffffff; }
+
+/* ========================================= TABELAS ========================================= */
+
+.table-responsive { 
+  width: 100%; 
+  overflow-x: auto; 
+  background: var(--surface); 
+  border: 1px solid var(--border); 
+  border-radius: var(--radius); 
+  box-shadow: var(--shadow-sm); 
+}
+
+table, .table { width: 100%; border-collapse: collapse; text-align: left; }
+table th, .table th { padding: 14px 20px; background: #fafafa; border-bottom: 1px solid var(--border); color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+table td, .table td { padding: 16px 20px; border-bottom: 1px solid var(--border); color: var(--text); font-size: 14px; vertical-align: middle; }
+table tr:last-child td, .table tr:last-child td { border-bottom: none; }
+table tbody tr:hover td, .table tbody tr:hover td { background: #fdfcff; }
+
+table td .actions-container { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+table td .btn, .table td .btn { min-height: 32px; padding: 0 12px; font-size: 13px; }
+
+/* ========================================= TELA DE LOGIN E CADASTRO CENTRALIZADA ========================================= */
+
+/* Envolva seu bloco de login com essa classe no HTML para centralização perfeita */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: min(440px, 100%);
+  margin: 80px auto;
+  padding: 0 16px;
+}
+
+.auth-container h1 {
+  margin-bottom: 16px;
+}
+
+/* Modificador do formulário de login para empilhar os elementos */
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  gap: 20px;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+.auth-container form .form-group {
+  width: 100%;
+}
+
+.auth-container form button {
+  align-self: flex-start;
+  width: auto;
+  padding: 0 24px;
+}
+
+.auth-footer {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.auth-footer a {
+  color: var(--primary);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+/* ========================================= RESPONSIVIDADE ========================================= */
+
+@media (max-width: 900px) {
+  nav.navbar > .container { flex-wrap: wrap; gap: 12px; }
+  nav.navbar > .container > div { width: 100%; justify-content: flex-start; }
+}
+
+@media (max-width: 768px) {
+  form { grid-template-columns: 1fr; }
+  form button, form input[type="submit"] { width: 100%; }
+  table th, table td, .table th, .table td { padding: 12px 14px; }
+}
+
+@media (max-width: 600px) {
+  nav.navbar > .container { align-items: flex-start; flex-direction: column; padding-top: 8px; padding-bottom: 8px; }
+  nav.navbar .navbar-brand { white-space: normal; }
+  nav.navbar > .container > div { display: flex; flex-direction: column; align-items: stretch; width: 100%; }
+  nav.navbar > .container > div > a, nav.navbar > .container > div > button { width: 100%; justify-content: center; margin: 0 !important; }
+  
+  .auth-container { margin: 40px auto; }
+  .auth-container form { padding: 24px; }
+}

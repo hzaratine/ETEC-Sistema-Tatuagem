@@ -1,54 +1,96 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard — Estúdio de Tatuagem</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel — Estúdio de Tatuagem</title>
+    <link rel="stylesheet" href="css/Styledashboard.css">
 </head>
 <body>
 
-  <nav class="navbar navbar-dark bg-dark mb-4">
-    <div class="container">
-      <span class="navbar-brand">Estúdio de Tatuagem</span>
-      <button onclick="sair()" class="btn btn-outline-light btn-sm">Sair</button>
-    </div>
-  </nav>
+    <header class="topbar">
+        <div class="container topbar-inner">
+            <a href="dashboard.html" class="brand">Estúdio de Tatuagem</a>
+            <button type="button" class="btn-danger" onclick="sair()">
+                Sair
+            </button>
+        </div>
+    </header>
 
-  <div class="container">
-    <h1 class="mb-4">Painel</h1>
+    <main class="container page-content">
 
-    <div class="row g-3">
-      <div class="col-md-4">
-        <a href="clientes.html" class="btn btn-primary w-100 py-3">Clientes</a>
-      </div>
+        <section class="page-heading">
+            <h1>Painel de controle</h1>
+            <p>Gerencie as informações do estúdio em um só lugar.</p>
+        </section>
 
-      <div class="col-md-4">
-        <a href="tatuadores.html" class="btn btn-primary w-100 py-3">Tatuadores</a>
-      </div>
+        <section class="user-panel">
+            <div class="user-avatar" id="usuario-avatar">U</div>
 
-      <div class="col-md-4">
-        <a href="agendamentos.html" class="btn btn-primary w-100 py-3">Agendamentos</a>
-      </div>
+            <div class="user-info">
+                <strong id="usuario-nome">Carregando usuário...</strong>
+                <small id="usuario-email"></small>
+                <div>
+                    <span class="role" id="usuario-tipo">Verificando acesso...</span>
+                </div>
+            </div>
+        </section>
 
-      <div class="col-md-4">
-        <a href="senioridade.html" class="btn btn-secondary w-100 py-3">Senioridade</a>
-      </div>
+        <h2 class="section-title">Gerenciamento</h2>
 
-      <div class="col-md-4">
-        <a href="estilos.html" class="btn btn-secondary w-100 py-3">Estilos</a>
-      </div>
+        <section class="dashboard-grid">
 
-      <div class="col-md-4">
-        <a href="cadastro.html" class="btn btn-secondary w-100 py-3">Novo Funcionário</a>
-      </div>
-    </div>
-  </div>
+            <article class="dashboard-card">
+                <h2>Clientes</h2>
+                <p>Consulte e gerencie os clientes do estúdio.</p>
+                <a href="clientes.html" class="btn">Abrir clientes</a>
+            </article>
 
-  <script src="js/auth.js"></script>
-  <script>
-    protegerPagina()
-  </script>
+            <article class="dashboard-card">
+                <h2>Tatuadores</h2>
+                <p>Gerencie os profissionais do estúdio.</p>
+                <a href="tatuadores.html" class="btn">Abrir tatuadores</a>
+            </article>
+
+            <article class="dashboard-card">
+                <h2>Agendamentos</h2>
+                <p>Consulte e organize os horários.</p>
+                <a href="agendamentos.html" class="btn">Abrir agendamentos</a>
+            </article>
+
+            <article class="dashboard-card">
+                <h2>Estilos</h2>
+                <p>Gerencie os estilos de tatuagem.</p>
+                <a href="estilos.html" class="btn">Abrir estilos</a>
+            </article>
+
+            <article class="dashboard-card">
+                <h2>Senioridade</h2>
+                <p>Gerencie os níveis dos tatuadores.</p>
+                <a href="senioridade.html" class="btn">Abrir senioridade</a>
+            </article>
+
+            <article class="dashboard-card" id="card-funcionarios">
+                <h2>Funcionários</h2>
+                <p>Crie novas contas para a equipe do estúdio.</p>
+                <a href="cadastro.html" class="btn">Novo funcionário</a>
+            </article>
+
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>
+        protegerPagina()
+        mostrarUsuarioLogado()
+
+        const usuario = obterUsuarioLogado()
+
+        if (usuario && usuario.tipo !== 'admin') {
+            document.getElementById('card-funcionarios').style.display = 'none'
+        }
+    </script>
 
 </body>
 </html>
-```

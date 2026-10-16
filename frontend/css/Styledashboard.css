@@ -1,0 +1,94 @@
+/* ========================================= DASHBOARD — ESTÚDIO DE TATUAGEM Estilos exclusivos do painel ========================================= */
+
+:root { --dash-primary: #7041a0; --dash-primary-hover: #5c3285; --dash-primary-light: #f5f0fa; --dash-background: #f8f9fa; --dash-surface: #ffffff; --dash-text: #1a1824; --dash-muted: #64748b; --dash-border: #e2e8f0; --dash-danger: #ef4444; --dash-danger-hover: #dc2626; --dash-dark: #26222e; --dash-radius: 8px; --dash-shadow-sm: 0 1px 2px rgb(0 0 0 / 5%); --dash-shadow-md: 0 4px 12px rgb(0 0 0 / 8%); }
+
+/* Reset restrito ao Dashboard */ body { margin: 0; min-height: 100vh; background: var(--dash-background); color: var(--dash-text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+body *, body *::before, body *::after { box-sizing: border-box; }
+
+/* Container principal */ .container { width: min(1200px, 94%); margin-inline: auto; }
+
+/* Barra superior */ .topbar { width: 100%; background: var(--dash-dark); border-bottom: 3px solid var(--dash-primary); box-shadow: var(--dash-shadow-sm); }
+
+.topbar-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+
+.brand { color: #fff; font-size: 19px; font-weight: 700; text-decoration: none; letter-spacing: -0.3px; }
+
+.brand:hover { color: #e5d5f4; }
+
+/* Botões */ .btn, .btn-danger { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 9px 16px; border: 1px solid transparent; border-radius: var(--dash-radius); font: inherit; font-weight: 600; text-decoration: none; text-align: center; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+
+.btn { background: var(--dash-primary); color: #fff; }
+
+.btn:hover { background: var(--dash-primary-hover); }
+
+.btn-danger { background: transparent; color: #fff; border-color: rgb(255 255 255 / 30%); }
+
+.btn-danger:hover { background: var(--dash-danger); border-color: var(--dash-danger); }
+
+/* Conteúdo da página */ .page-content { padding-top: 36px; padding-bottom: 48px; }
+
+.page-heading { margin-bottom: 28px; }
+
+.page-heading h1 { margin: 0 0 8px; color: var(--dash-text); font-size: clamp(25px, 3vw, 32px); line-height: 1.25; letter-spacing: -0.7px; }
+
+.page-heading p { margin: 0; color: var(--dash-muted); font-size: 15px; }
+
+/* Painel do usuário */ .user-panel { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; padding: 22px 24px; background: var(--dash-surface); border: 1px solid var(--dash-border); border-radius: 12px; box-shadow: var(--dash-shadow-sm); }
+
+.user-avatar { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 54px; height: 54px; border-radius: 50%; background: var(--dash-primary-light); color: var(--dash-primary); font-size: 22px; font-weight: 700; }
+
+.user-info { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+
+.user-info strong { font-size: 16px; overflow-wrap: anywhere; }
+
+.user-info small { color: var(--dash-muted); overflow-wrap: anywhere; }
+
+.role { display: inline-block; margin-top: 5px; padding: 3px 10px; border-radius: 20px; background: var(--dash-primary-light); color: var(--dash-primary); font-size: 12px; font-weight: 700; }
+
+/* Seção de gerenciamento */ .section-title { margin: 0 0 18px; font-size: 20px; font-weight: 700; color: var(--dash-text); }
+
+/* Grade dos cartões */ .dashboard-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+
+.dashboard-card { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding: 24px; background: var(--dash-surface); border: 1px solid var(--dash-border); border-radius: 12px; box-shadow: var(--dash-shadow-sm); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+
+.dashboard-card:hover { transform: translateY(-3px); border-color: #d4c2e8; box-shadow: var(--dash-shadow-md); }
+
+.dashboard-card h2 { margin: 0 0 10px; font-size: 18px; line-height: 1.4; color: var(--dash-text); }
+
+.dashboard-card p { flex: 1; margin: 0 0 22px; color: var(--dash-muted); font-size: 14px; }
+
+.dashboard-card .btn { margin-top: auto; }
+
+/* Responsividade */ @media (max-width: 900px) { .dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+@media (max-width: 600px) { .topbar-inner { min-height: 64px; gap: 12px; }
+
+.brand {
+    font-size: 16px;
+    white-space: normal;
+}
+
+.page-content {
+    padding-top: 26px;
+    padding-bottom: 32px;
+}
+
+.dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.dashboard-card {
+    padding: 20px;
+}
+
+.user-panel {
+    padding: 18px;
+    gap: 12px;
+}
+
+
+}
+
+@media (max-width: 360px) { .topbar-inner { align-items: flex-start; flex-direction: column; justify-content: center; padding-top: 14px; padding-bottom: 14px; } }
